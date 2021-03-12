@@ -1,0 +1,10 @@
+DBENGINE=PGSQL
+DBHOST=localhost
+DBNAME=kamailio
+DBRWUSER="kamailio"
+DBRWPW="kamailiorw"
+DBROUSER="kamailioro"
+DBROPW="kamailioro"
+DBROOTUSER="postgres"
+DBROOTPW="dbrootpw"
+DBINITASK=no
