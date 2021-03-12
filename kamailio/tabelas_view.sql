@@ -90,4 +90,11 @@ SELECT (ku.numero || '@'::text) || ku.dominio::text AS key_name,
     0 AS expires
 FROM vw_kamailio_users ku;
 
+insert into empresa(ativo,cpf_cnpj,nome) values (true,'12345678901234','FUNDACAO ASTERISK LIBRE');
+insert into empresa_dominio(dominio,empresa) values('kamailio.asterisklibre.org',1);
+insert into servidor_voip(ativo,endereco_ip,nome) values (true,'10.128.0.5','ASTERISK-1');
+insert into ramal(nome,numero,senha,empresa,servidor_voip) values('Ramal 1000',1000,'2ff5b6d9fc0e72ca355428878d5a79d9',1,1);
+insert into ramal(nome,numero,senha,empresa,servidor_voip) values('Ramal 1001',1001,'be1fe0793917820c24f1d312d337f709',1,1);
+
+
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO kamailio;
