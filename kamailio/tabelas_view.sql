@@ -89,3 +89,5 @@ SELECT (ku.numero || '@'::text) || ku.dominio::text AS key_name,
     ku.pabx AS key_value,
     0 AS expires
 FROM vw_kamailio_users ku;
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO kamailio;
