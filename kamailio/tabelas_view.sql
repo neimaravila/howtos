@@ -61,20 +61,6 @@ SELECT d.dominio,
     NULL::text AS did
 FROM empresa_dominio d;
 
-CREATE VIEW public.vw_kamailio_server (
-    key_name,
-    key_type,
-    value_type,
-    key_value,
-    expires)
-AS
-SELECT (ku.numero || '@'::text) || ku.dominio::text AS key_name,
-    0 AS key_type,
-    0 AS value_type,
-    ku.pabx AS key_value,
-    0 AS expires
-FROM vw_kamailio_users ku;
-
 CREATE OR REPLACE VIEW public.vw_kamailio_users (
     numero,
     senha,
@@ -89,3 +75,17 @@ FROM ramal r
      JOIN servidor_voip s ON r.servidor_voip = s.codigo
      JOIN empresa_dominio ed ON r.empresa = ed.empresa
 WHERE r.empresa IS NOT NULL;
+
+CREATE VIEW public.vw_kamailio_server (
+    key_name,
+    key_type,
+    value_type,
+    key_value,
+    expires)
+AS
+SELECT (ku.numero || '@'::text) || ku.dominio::text AS key_name,
+    0 AS key_type,
+    0 AS value_type,
+    ku.pabx AS key_value,
+    0 AS expires
+FROM vw_kamailio_users ku;
