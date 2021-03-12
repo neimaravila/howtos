@@ -1,0 +1,17 @@
+[Unit]
+Description=Kernel based rtp proxy
+After=syslog.target
+After=network-online.target
+After=iptables.service
+Requires=network-online.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/rtpengine.pid
+EnvironmentFile=-/etc/sysconfig/rtpengine
+ExecStart=/usr/sbin/rtpengine -p /var/run/rtpengine.pid \$OPTIONS
+
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
