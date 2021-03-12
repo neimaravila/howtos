@@ -1,0 +1,1 @@
+OPTIONS="--interface=priv/KAMAILIO_IP_INTERNO --interface=pub/KAMAILIO_IP_INTERNO!KAMAILIO_IP_EXTERNO --listen-tcp=127.0.0.1:2230 -n 127.0.0.1:2223 -m 10000 -M 20000 --log-facility=local1 --table=63 --delete-delay=0 --timeout=60 --silent-timeout=600 --final-timeout=7200 –offer-timeout=60 --num-threads=12 --tos=184 –no-fallback"
