@@ -1,0 +1,57 @@
+diff --git a/daemon/crypto.c b/daemon/crypto.c
+index e04dc8b..34a4487 100644
+--- a/daemon/crypto.c
++++ b/daemon/crypto.c
+@@ -43,52 +43,6 @@ static int null_crypt_rtcp(struct crypto_context *c, struct rtcp_packet *r, str
+ /* all lengths are in bytes */
+ struct crypto_suite __crypto_suites[] = {
+        {
+-               .name                   = "AEAD_AES_256_GCM",
+-               .dtls_name              = "SRTP_AEAD_AES_256_GCM",
+-               .master_key_len         = 32,
+-               .master_salt_len        = 12,
+-               .session_key_len        = 32,
+-               .session_salt_len       = 12,
+-               .srtp_lifetime          = 1ULL << 48,
+-               .srtcp_lifetime         = 1ULL << 31,
+-               .kernel_cipher          = REC_AEAD_AES_GCM_256,
+-               .kernel_hmac            = REH_NULL,
+-               .srtp_auth_tag          = 0,
+-               .srtcp_auth_tag         = 0,
+-               .srtp_auth_key_len      = 0,
+-               .srtcp_auth_key_len     = 0,
+-               .encrypt_rtp            = aes_gcm_encrypt_rtp,
+-               .decrypt_rtp            = aes_gcm_decrypt_rtp,
+-               .encrypt_rtcp           = aes_gcm_encrypt_rtcp,
+-               .decrypt_rtcp           = aes_gcm_decrypt_rtcp,
+-               .session_key_init       = aes_gcm_session_key_init,
+-               .session_key_cleanup    = evp_session_key_cleanup,
+-               .aead_evp               = EVP_aes_256_gcm,
+-       },
+-       {
+-               .name                   = "AEAD_AES_128_GCM",
+-               .dtls_name              = "SRTP_AEAD_AES_128_GCM",
+-               .master_key_len         = 16,
+-               .master_salt_len        = 12,
+-               .session_key_len        = 16,
+-               .session_salt_len       = 12,
+-               .srtp_lifetime          = 1ULL << 48,
+-               .srtcp_lifetime         = 1ULL << 31,
+-               .kernel_cipher          = REC_AEAD_AES_GCM_128,
+-               .kernel_hmac            = REH_NULL,
+-               .srtp_auth_tag          = 0,
+-               .srtcp_auth_tag         = 0,
+-               .srtp_auth_key_len      = 0,
+-               .srtcp_auth_key_len     = 0,
+-               .encrypt_rtp            = aes_gcm_encrypt_rtp,
+-               .decrypt_rtp            = aes_gcm_decrypt_rtp,
+-               .encrypt_rtcp           = aes_gcm_encrypt_rtcp,
+-               .decrypt_rtcp           = aes_gcm_decrypt_rtcp,
+-               .session_key_init       = aes_gcm_session_key_init,
+-               .session_key_cleanup    = evp_session_key_cleanup,
+-               .aead_evp               = EVP_aes_128_gcm,
+-       },
+-       {
+                .name                   = "AES_256_CM_HMAC_SHA1_80",
+                //.dtls_name            = "SRTP_AES128_CM_SHA1_80",
+                .master_key_len         = 32,
