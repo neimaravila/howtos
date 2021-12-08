@@ -1,8 +1,6 @@
-diff --git a/daemon/crypto.c b/daemon/crypto.c
-index e04dc8b..34a4487 100644
---- a/daemon/crypto.c
-+++ b/daemon/crypto.c
-@@ -43,52 +43,6 @@ static int null_crypt_rtcp(struct crypto_context *c, struct rtcp_packet *r, str
+--- daemon/crypto.c.orig        2021-12-08 20:24:27.995347871 -0300
++++ daemon/crypto.c     2021-12-08 20:24:44.279588614 -0300
+@@ -43,52 +43,6 @@
  /* all lengths are in bytes */
  struct crypto_suite __crypto_suites[] = {
         {
