@@ -1,0 +1,193 @@
+#!/bin/bash
+
+echo "Kamailio Stupid Script 1.0"
+
+case "$1" in 
+	'domain')
+	echo "Trabalhando com Dominio"
+	case "$2" in
+		'list')
+			echo "Listando Todos os Dominios - BANCO DE DADOS"
+			psql -U postgres -d kamailio -c 'select * from dominio' |grep -v row
+			#echo "Listando Todos os Dominios - KAMAILIO"
+			#sudo kamctl domain show |grep -v which
+			exit;
+		;;
+                'reload')
+                        echo "Recarregando Todos os Dominios - KAMAILIO"
+                        sudo kamctl domain reload |grep -v gdb
+                        exit;
+                ;;
+                'add')
+			if [ $# -lt 3 ]
+				then
+					echo "Dominio Faltando. Exemplo: kss domain add neimar.pabxip.com.br"
+					exit
+			fi
+			echo "Adicionando o Dominio $3"
+			psql -U postgres -d kamailio -c "insert into dominio(fqdn) values ('$3')"
+			sudo kamctl domain reload
+                        exit;
+                ;;
+                'edit')
+                        if [ $# -lt 4 ]
+                                then
+					echo "Dados Faltando. Sintaxe kss domain edit <codigo> <fqdn>"
+                                        echo "Exemplo: kss domain edit 1 neimar.pabxip.com.br"
+                                        exit
+                        fi
+                        echo "Alterando o Dominio de Codigo $3 para $4"
+			#echo "Anterior: "
+                        #psql -U postgres -d kamailio -c "select fqdn from dominio where id = $3"
+			psql -U postgres -d kamailio -c "update dominio set fqdn = '$4' where id = $3"
+                        sudo kamctl domain reload
+                        exit;
+                ;;
+
+                'remove')
+                        if [ $# -lt 3 ]
+                                then
+                                        echo "Dominio Faltando. Exemplo: kss domain remove neimar.pabxip.com.br"
+                                        exit
+                        fi
+                        echo "Removendo o Dominio $3"
+                        psql -U postgres -d kamailio -c "delete from dominio where fqdn = '$3'"
+			sudo kamctl domain reload
+                        exit;
+                ;;
+		
+	esac
+;;
+        'pabx')
+        echo "Trabalhando com PABX"
+        case "$2" in
+                'list')
+                        echo "Listando Todos os PABX - BANCO DE DADOS"
+                        psql -U postgres -d kamailio -c 'select * from pabx' |grep -v row
+                        echo "Listando Todos os PABX - KAMAILIO"
+                        sudo kamcmd htable.dump server
+                        exit;
+                ;;
+                'reload')
+                        echo "Recarregando Todos os Dominios - KAMAILIO"
+                        sudo kamcmd htable.reload server
+                        exit;
+                ;;
+                'add')
+                        if [ $# -lt 4 ]
+                                then
+					echo "Dados Faltando. Sintaxe kss pabx add <endereco_ip> <porta>"
+                                        echo "Exemplo: kss pabx add 172.16.11.6 6060"
+                                        exit
+                        fi
+                        echo "Adicionando o PABX $3 na Porta $4"
+                        psql -U postgres -d kamailio -c "insert into pabx(endereco_ip,porta) values ('$3',$4)"
+                        sudo kamcmd htable.reload server
+                        exit;
+                ;;
+                'edit')
+                        if [ $# -lt 5 ]
+                                then
+                                        echo "Dados Faltando. Sintaxe kss pabx edit <codigo> <endereco_ip> <porta>"
+                                        echo "Exemplo: kss pabx edit 1 172.16.11.6 6060"
+                                        exit
+                        fi
+                        echo "Alterando o EnderecoIP:Porta do PABX de Codigo $3 para $4:$5"
+                        psql -U postgres -d kamailio -c "update pabx set endereco_ip = '$4', porta = $5 where id = $3"
+                        sudo kamcmd htable.reload server
+                        exit;
+                ;;
+
+                'remove')
+                        if [ $# -lt 4 ]
+                                then
+					echo "Dados Faltando. Sintaxe kss pabx remove <endereco_ip> <porta>"
+					echo "Exemplo: kss pabx remove 172.16.11.6 6060"
+					exit
+                        fi
+                        echo "Removendo o PABX $3 Porta: $4"
+                        psql -U postgres -d kamailio -c "delete from pabx where endereco_ip = '$3' and porta = $4"
+                        sudo kamcmd htable.reload server
+                        exit;
+                ;;
+        esac
+;;
+        'endpoint')
+        echo "Trabalhando com Endpoint"
+        case "$2" in
+                'list')
+                        echo "Listando Todos os Endpoints - BANCO DE DADOS"
+                        psql -U postgres -d kamailio -c 'select * from vw_kamailio_users' |grep -v row
+                        exit;
+                ;;
+                'add')
+                        if [ $# -lt 6 ]
+                                then
+                                        echo "Dados Faltando. Sintaxe kss endpoint add <login> <senha> <id_dominio> <id_pabx>"
+                                        echo "Exemplo: kss endpoint add 1000 123456 1 1"
+                                        exit
+                        fi
+                        echo "Adicionando o Login $3 Senha $4 no Dominio Codigo $5 - PABX $6"
+                        psql -U postgres -d kamailio -c "insert into endpoint(login,senha,dominio,pabx) values ('$3','$4',$5,$6)"
+                        exit;
+                ;;
+                'remove')
+                        if [ $# -lt 3 ]
+                                then
+					echo "Dados Faltando. Sintaxe kss endpoint remove <id>"
+                                        echo "o Faltando. Exemplo: kss endpoint remove 1"
+                                        exit
+                        fi
+                        echo "Removendo o Endpoint Codigo $3"
+                        psql -U postgres -d kamailio -c "delete from endpoint where id = '$3'"
+                        exit;
+                ;;
+                'edit')
+                        if [ $# -lt 4 ]
+                                then
+                                        echo "Dados Faltando. Sintaxe kss endpoint edit <id> <senha>"
+                                        echo "Exemplo: kss endpoint edit 1 123456"
+                                        exit
+                        fi
+                        echo "Removendo Alterando A senha do Endpoint Id $3 para $4"
+                        psql -U postgres -d kamailio -c "update endpoint set senha = $4 where id = '$3'"
+                        exit;
+                ;;
+
+        esac
+;;
+
+
+	'help')
+	echo ""
+	echo "Comandos Permitidos: $0 [domain|pabx|endpoint]"
+
+	echo ""
+	echo "Comandos Permitidos: Para [domain]"
+	echo "$0 domain list - Listar Todos os Dominios Cadastrados"
+	echo "$0 domain reload - Recarregar no Kamailio Todos os Dominios Cadastrados"
+	echo "$0 domain add <dominio> - Adiciona o dominio <dominio> no Kamailio"
+	echo "$0 domain remove <dominio> - Remove o dominio <dominio> do Kamailio"
+	echo "$0 domain edit <codigo> <dominio> - Altera o <dominio> de Código <codigo> do Kamailio"
+
+	echo "--------------------------"
+
+        echo ""
+        echo "Comandos Permitidos: Para [pabx]"
+        echo "$0 pabx list - Listar Todos os PABX Cadastrados"
+        echo "$0 pabx reload - Recarregar no Kamailio Todos os PABX Cadastrados"
+        echo "$0 pabx add <endereco_ip> <porta> - Adiciona o PABX de <endereco_ip> e <porta> no Kamailio"
+        echo "$0 remove remove <endereco_ip> <porta> - Remove o PABX de <endereco_ip> e <porta> no Kamailio"
+        echo "$0 domain edit <codigo> <endereco_ip> <porta> - Altera o <endereco_ip> e <porta> de Código <codigo> do Kamailio"
+
+
+        echo "--------------------------"
+
+        echo ""
+        echo "Comandos Permitidos: Para [endpoint]"
+        echo "$0 endpoint list - Listar Todos os Endpoints Cadastrados"
+        echo "$0 endpoint add <login> <senha> <id_dominio> <id_pabx> - Adiciona um Endpoint ao Kamailio"
+        echo "$0 endpoint remove <id> - Remove o Endpoint do Kamailio"
+        echo "$0 endpoint edit <id> <nova_senha> - Altera a Senha do Endpoint"
+;;
+esac
