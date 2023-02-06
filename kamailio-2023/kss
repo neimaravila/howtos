@@ -160,34 +160,34 @@ case "$1" in
 
 	'help')
 	echo ""
-	echo "Comandos Permitidos: $0 [domain|pabx|endpoint]"
+	echo "Comandos Permitidos: kss [domain|pabx|endpoint]"
 
 	echo ""
 	echo "Comandos Permitidos: Para [domain]"
-	echo "$0 domain list - Listar Todos os Dominios Cadastrados"
-	echo "$0 domain reload - Recarregar no Kamailio Todos os Dominios Cadastrados"
-	echo "$0 domain add <dominio> - Adiciona o dominio <dominio> no Kamailio"
-	echo "$0 domain remove <dominio> - Remove o dominio <dominio> do Kamailio"
-	echo "$0 domain edit <codigo> <dominio> - Altera o <dominio> de Código <codigo> do Kamailio"
+	echo "kss domain list - Listar Todos os Dominios Cadastrados"
+	echo "kss domain reload - Recarregar no Kamailio Todos os Dominios Cadastrados"
+	echo "kss domain add <dominio> - Adiciona o dominio <dominio> no Kamailio"
+	echo "kss domain remove <dominio> - Remove o dominio <dominio> do Kamailio"
+	echo "kss domain edit <codigo> <dominio> - Altera o <dominio> de Código <codigo> do Kamailio"
 
 	echo "--------------------------"
 
         echo ""
         echo "Comandos Permitidos: Para [pabx]"
-        echo "$0 pabx list - Listar Todos os PABX Cadastrados"
-        echo "$0 pabx reload - Recarregar no Kamailio Todos os PABX Cadastrados"
-        echo "$0 pabx add <endereco_ip> <porta> - Adiciona o PABX de <endereco_ip> e <porta> no Kamailio"
-        echo "$0 remove remove <endereco_ip> <porta> - Remove o PABX de <endereco_ip> e <porta> no Kamailio"
-        echo "$0 domain edit <codigo> <endereco_ip> <porta> - Altera o <endereco_ip> e <porta> de Código <codigo> do Kamailio"
+        echo "kss pabx list - Listar Todos os PABX Cadastrados"
+        echo "kss pabx reload - Recarregar no Kamailio Todos os PABX Cadastrados"
+        echo "kss pabx add <endereco_ip> <porta> - Adiciona o PABX de <endereco_ip> e <porta> no Kamailio"
+        echo "kss pabx remove <endereco_ip> <porta> - Remove o PABX de <endereco_ip> e <porta> no Kamailio"
+        echo "kss pabx edit <codigo> <endereco_ip> <porta> - Altera o <endereco_ip> e <porta> de Código <codigo> do Kamailio"
 
 
         echo "--------------------------"
 
         echo ""
         echo "Comandos Permitidos: Para [endpoint]"
-        echo "$0 endpoint list - Listar Todos os Endpoints Cadastrados"
-        echo "$0 endpoint add <login> <senha> <id_dominio> <id_pabx> - Adiciona um Endpoint ao Kamailio"
-        echo "$0 endpoint remove <id> - Remove o Endpoint do Kamailio"
-        echo "$0 endpoint edit <id> <nova_senha> - Altera a Senha do Endpoint"
+        echo "kss endpoint list - Listar Todos os Endpoints Cadastrados"
+        echo "kss endpoint add <login> <senha> <id_dominio> <id_pabx> - Adiciona um Endpoint ao Kamailio"
+        echo "kss endpoint remove <id> - Remove o Endpoint do Kamailio"
+        echo "kss endpoint edit <id> <nova_senha> - Altera a Senha do Endpoint"
 ;;
 esac
