@@ -99,14 +99,14 @@ case "$1" in
                 ;;
 
                 'remove')
-                        if [ $# -lt 4 ]
+                        if [ $# -lt 3 ]
                                 then
-					echo "Dados Faltando. Sintaxe kss pabx remove <endereco_ip> <porta>"
-					echo "Exemplo: kss pabx remove 172.16.11.6 6060"
+					echo "Dados Faltando. Sintaxe kss pabx remove <id>"
+					echo "Exemplo: kss pabx remove 1"
 					exit
                         fi
-                        echo "Removendo o PABX $3 Porta: $4"
-                        psql -U postgres -d kamailio -c "delete from pabx where endereco_ip = '$3' and porta = $4"
+                        echo "Removendo o PABX $3"
+                        psql -U postgres -d kamailio -c "delete from pabx where id = $3"
                         sudo kamcmd htable.reload server
                         exit;
                 ;;
@@ -177,7 +177,7 @@ case "$1" in
         echo "kss pabx list - Listar Todos os PABX Cadastrados"
         echo "kss pabx reload - Recarregar no Kamailio Todos os PABX Cadastrados"
         echo "kss pabx add <endereco_ip> <porta> - Adiciona o PABX de <endereco_ip> e <porta> no Kamailio"
-        echo "kss pabx remove <endereco_ip> <porta> - Remove o PABX de <endereco_ip> e <porta> no Kamailio"
+        echo "kss pabx remove <id> - Remove o PABX"
         echo "kss pabx edit <codigo> <endereco_ip> <porta> - Altera o <endereco_ip> e <porta> de Código <codigo> do Kamailio"
 
 
