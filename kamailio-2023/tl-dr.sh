@@ -8,7 +8,7 @@ sudo crb enable
 sudo dnf -y install https://opensource.vsphone.com.br/vsphone-opensource.rpm
 
 echo "Instalando RTPEngine"
-sudo dnf -y install ngcp-rtpengine ngcp-rtpengine-kernel ngcp-rtpengine-dkms iptables-services iptables-devel
+sudo dnf -y install ngcp-rtpengine ngcp-rtpengine-kernel ngcp-rtpengine-dkms iptables-services iptables-devel wget
 
 echo "Instalando Kamailio"
 sudo dnf -y install kamailio kamailio-websocket \
